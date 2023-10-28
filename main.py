@@ -1,60 +1,50 @@
-import pygame
-import math
-from mazes import small_maze
+from maze import *
+from player import *
+from button import *
+from playerController import *
+from dfs import *
+from bfs import *
 
 pygame.init()
+player = Player(TILE_SIZE, TILE_SIZE)
 
-TILE_SIZE = 64
-WIDTH = TILE_SIZE * 10
-HEIGHT = TILE_SIZE * 8
-screen = pygame.display.set_mode([WIDTH, HEIGHT])
-timer = pygame.time.Clock()
-FPS = 30
-font = pygame.font.Font('HalloweenSlimePersonalUse-4B80D.otf', 20)
-level = small_maze
-player = pygame.Rect(64, 64, 64, 64)
+maze = Maze(small_maze)
 
-tiles = [pygame.image.load('blank.png'), pygame.image.load('wall.png'), pygame.image.load('goal.png')]
-
-direction = pygame.key.get_pressed()
-
-
-def draw_maze():
-    for row in range(len(small_maze)):
-        for column in range(len(small_maze[row])):
-            x = column * TILE_SIZE
-            y = row * TILE_SIZE
-            tile = tiles[small_maze[row][column]]
-            screen.blit(tile, (x, y))
-
-
-def draw_player():
-    pygame.draw.rect(screen, 'white', player)
-
-
-def move_player():
-    if direction[pygame.K_UP]:
-        player.move_ip(0, -64)
-    if direction[pygame.K_DOWN]:
-        player.move_ip(0, 64)
-    if direction[pygame.K_LEFT]:
-        player.move_ip(-64, 0)
-    if direction[pygame.K_RIGHT]:
-        player.move_ip(64, 0)
-
+player_controller = PlayerController(player, maze)
+easy_button = Button(easy_button, 150, 500, small_maze, player_controller)  # not in correct position
+normal_button = Button(normal_button, 300, 500, medium_maze, player_controller)  # not in correct position
+hard_button = Button(hard_button, 426, 500, large_maze, player_controller)  # not in correct position
+dfs_solver = DFS()
+bfs_solver = BFS()
+player_controller.set_dfs_solver(dfs_solver)
+player_controller.set_bfs_solver(bfs_solver)
 
 run = True
 while run:
     timer.tick(FPS)
-    screen.fill('black')
-    draw_maze()
-    draw_player()
+    maze.draw()
+    player.draw()
+    easy_button.draw()
+    normal_button.draw()
+    hard_button.draw()
+
+    player_controller.move_to_goal_dfs()  # comment this line out to test bfs
+    # player_controller.move_to_goal_bfs() # uncomment this line out to test bfs
+
     direction = pygame.key.get_pressed()
-    move_player()
+    player_controller.move_player(direction)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_pos = pygame.mouse.get_pos()
+            easy_button.handle_mouse_click(mouse_pos, maze)
+            normal_button.handle_mouse_click(mouse_pos, maze)
+            hard_button.handle_mouse_click(mouse_pos, maze)
+
+            if easy_button.is_clicked or normal_button.is_clicked or hard_button.is_clicked:
+                player_controller.reset_player_position()
 
     pygame.display.flip()
 pygame.quit()
