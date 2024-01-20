@@ -1,6 +1,7 @@
 from config import *
 from dfs import *
 from bfs import *
+from dijkstra import *
 
 
 class PlayerController:
@@ -15,6 +16,7 @@ class PlayerController:
         self.maze = maze
         self.dfs_solver = DFS()
         self.bfs_solver = BFS()
+        self.dijkstra_solver = None
 
     """
     Moves the player in the specified direction based on keyboard input.
@@ -71,7 +73,17 @@ class PlayerController:
     def set_bfs_solver(self, bfs_solver):
         self.bfs_solver = bfs_solver
 
-    """Moves the player towards the goal using DFS."""
+    """
+    Sets the Dijkstra solver used by the controller.
+
+    :param dijkstra_solver: The Dijkstra solver object.
+    """
+    def set_dijkstra_solver(self, dijkstra_solver):
+        self.dijkstra_solver = dijkstra_solver
+
+    """
+    Moves the player towards the goal using DFS.
+    """
     def move_to_goal_dfs(self):
         start_position = (self.player.y // TILE_SIZE, self.player.x // TILE_SIZE)
         goal_position = self.find_goal_position()
@@ -81,7 +93,9 @@ class PlayerController:
                 path = self.dfs_solver.get_path()
                 self.follow_path(path)
 
-    """Moves the player towards the goal using BFS pathfinding."""
+    """
+    Moves the player towards the goal using BFS pathfinding.
+    """
     def move_to_goal_bfs(self):
         start_position = (self.player.y // TILE_SIZE, self.player.x // TILE_SIZE)
         goal_position = self.find_goal_position()
@@ -90,6 +104,19 @@ class PlayerController:
             if self.bfs_solver.bfs(self.maze.current_level, start_position, goal_position):
                 path = self.bfs_solver.get_path()
                 self.follow_path(path)
+
+    """
+    Moves the player towards the goal using Dijkstra's algorithm.
+    """
+    def move_to_goal_dijkstra(self):
+        if self.dijkstra_solver is not None:
+            start_position = (self.player.y // TILE_SIZE, self.player.x // TILE_SIZE)
+            goal_position = self.find_goal_position()
+
+            if goal_position:
+                path = self.dijkstra_solver.find_shortest_path(start_position, goal_position)
+                if path:
+                    self.follow_path(path)
 
     """
     Moves the player along the specified path.
@@ -139,6 +166,6 @@ class PlayerController:
     def find_goal_position(self):
         for i in range(len(self.maze.current_level)):
             for j in range(len(self.maze.current_level[0])):
-                if self.maze.current_level[i][j] == 2:
+                if self.maze.current_level[i][j] == 3:
                     return i, j
         return None
