@@ -12,6 +12,31 @@ class Maze:
         self.update_screen_size()
 
     """
+    Get the length of the maze, which is the number of rows in the maze.
+
+    :return: The number of rows in the maze.
+    """
+    def num_rows(self):
+        return len(self.current_level)
+
+    """
+    Get the number of columns in the maze.
+
+    :return: The number of columns in the maze.
+    """
+    def num_columns(self):
+        return len(self.current_level[0])
+
+    """
+    Retrieves the item at the specified index.
+
+    :param index: The index of the item to retrieve.
+    :return: The item at the specified index.
+    """
+    def __getitem__(self, index):
+        return self.current_level[index]
+
+    """
     Sets a new maze level and updates the screen size accordingly.
 
     :param new_level: The new maze level.
@@ -37,5 +62,3 @@ class Maze:
                 y = row * TILE_SIZE
                 tile = tiles[self.current_level[row][column]]
                 screen.blit(tile, (x, y))
-
-

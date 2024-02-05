@@ -17,6 +17,7 @@ class PlayerController:
         self.dfs_solver = DFS()
         self.bfs_solver = BFS()
         self.dijkstra_solver = None
+        self.astar_solver = None
 
     """
     Moves the player in the specified direction based on keyboard input.
@@ -82,6 +83,14 @@ class PlayerController:
         self.dijkstra_solver = dijkstra_solver
 
     """
+    Sets the A* solver used by the controller.
+
+    :param dijkstra_solver: The A* solver object.
+    """
+    def set_astar_solver(self, astar_solver):
+        self.astar_solver = astar_solver
+
+    """
     Moves the player towards the goal using DFS.
     """
     def move_to_goal_dfs(self):
@@ -117,6 +126,27 @@ class PlayerController:
                 path = self.dijkstra_solver.find_shortest_path(start_position, goal_position)
                 if path:
                     self.follow_path(path)
+
+    """
+    Moves the player to all 4 corners using A* algorithm.
+    """
+
+    def move_to_goal_astar(self):
+        if self.astar_solver is None:
+            print("A* solver not initialized. Please call set_astar_solver first.")
+            return
+
+        if not self.maze:
+            print("Maze not initialized.")
+            return
+
+        start_position = (self.player.y // TILE_SIZE, self.player.x // TILE_SIZE)
+        goal_position = self.astar_solver.find_goal_position(self.maze)
+
+        if goal_position:
+            path = self.astar_solver.find_shortest_path(self.astar_solver.heuristic1)
+            if path:
+                self.follow_path(path)
 
     """
     Moves the player along the specified path.
