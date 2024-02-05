@@ -5,6 +5,7 @@ from playerController import *
 from dfs import *
 from bfs import *
 from dijkstra import *
+from aStar import *
 
 pygame.init()
 player = Player(TILE_SIZE, TILE_SIZE)
@@ -18,9 +19,11 @@ hard_button = Button(hard_button, 426, 500, large_maze, player_controller)
 dfs_solver = DFS()
 bfs_solver = BFS()
 dijkstra_solver = Dijkstra(maze)
+aStar_solver = AStar(maze)
 player_controller.set_dfs_solver(dfs_solver)
 player_controller.set_bfs_solver(bfs_solver)
 player_controller.set_dijkstra_solver(dijkstra_solver)
+player_controller.set_astar_solver(aStar_solver)
 
 run = True
 while run:
@@ -33,7 +36,8 @@ while run:
 
     # player_controller.move_to_goal_dfs()
     # player_controller.move_to_goal_bfs()
-    player_controller.move_to_goal_dijkstra()
+    # player_controller.move_to_goal_dijkstra()
+    player_controller.move_to_goal_astar()
 
     direction = pygame.key.get_pressed()
     player_controller.move_player(direction)
