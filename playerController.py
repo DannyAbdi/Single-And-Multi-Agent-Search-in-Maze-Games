@@ -173,7 +173,7 @@ class PlayerController:
                     self.player.x, self.player.y = new_x, new_y
 
                     pygame.display.flip()
-                    pygame.time.delay(100)  # Introduce a delay for visualization
+                    pygame.time.delay(100)
 
     """
     Draws the path on the screen for visualization.

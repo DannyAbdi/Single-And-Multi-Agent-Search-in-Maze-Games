@@ -66,7 +66,8 @@ large_maze = [
 levels = [small_maze, medium_maze, large_maze]
 current_level = levels[0]
 player_model = pygame.Rect(TILE_SIZE, TILE_SIZE, TILE_SIZE, TILE_SIZE)
-tiles = [pygame.image.load('blank.png'), pygame.image.load('wall.png'), pygame.image.load('blank.png'), pygame.image.load('goal.png'), pygame.image.load('blank.png')]
+tiles = [pygame.image.load('blank.png'), pygame.image.load('wall.png'), pygame.image.load('blank.png'),
+         pygame.image.load('goal.png'), pygame.image.load('blank.png')]
 easy_button = pygame.image.load('button_easy.png').convert_alpha()
 normal_button = pygame.image.load('button_normal.png').convert_alpha()
 hard_button = pygame.image.load('button_hard.png').convert_alpha()

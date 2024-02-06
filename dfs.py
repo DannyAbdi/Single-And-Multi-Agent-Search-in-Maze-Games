@@ -17,7 +17,7 @@ class DFS:
     """
     def get_neighbours(self, maze, i, j):
         neighbours = []
-        directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]  # Right, Down, Left, Up
+        directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
 
         for direction in directions:
             ni, nj = i + direction[0], j + direction[1]
