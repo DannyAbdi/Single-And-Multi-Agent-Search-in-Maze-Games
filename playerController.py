@@ -2,6 +2,7 @@ from config import *
 from dfs import *
 from bfs import *
 from dijkstra import *
+from game import *
 
 
 class PlayerController:
@@ -14,6 +15,8 @@ class PlayerController:
     def __init__(self, player, maze):
         self.player = player
         self.maze = maze
+        self.player_position = (1, 1)
+        self.enemy_positions = self.get_enemy_positions()
         self.dfs_solver = DFS()
         self.bfs_solver = BFS()
         self.dijkstra_solver = None
@@ -30,16 +33,30 @@ class PlayerController:
 
         if direction[pygame.K_UP]:
             new_y -= TILE_SIZE
+            new_position = (self.player_position[0] - 1, self.player_position[1])
         elif direction[pygame.K_DOWN]:
             new_y += TILE_SIZE
+            new_position = (self.player_position[0] + 1, self.player_position[1])
         elif direction[pygame.K_LEFT]:
             new_x -= TILE_SIZE
+            new_position = (self.player_position[0], self.player_position[1] - 1)
         elif direction[pygame.K_RIGHT]:
             new_x += TILE_SIZE
+            new_position = (self.player_position[0], self.player_position[1] + 1)
+        else:
+            return
+
+        if self.is_valid_position(new_position):
+            self.player_position = new_position
 
         if self.check_collision(new_x, new_y):
             self.player.x = new_x
             self.player.y = new_y
+
+    def is_valid_position(self, position):
+        x, y = position
+        return 0 <= x < len(self.maze.current_level) and 0 <= y < len(self.maze.current_level[0]) and \
+            self.maze.current_level[x][y] != 1
 
     """
     Checks if the player will collide with walls at the specified position.
