@@ -71,9 +71,5 @@ tiles = [pygame.image.load('blank.png'), pygame.image.load('wall.png'), pygame.i
 easy_button = pygame.image.load('button_easy.png').convert_alpha()
 normal_button = pygame.image.load('button_normal.png').convert_alpha()
 hard_button = pygame.image.load('button_hard.png').convert_alpha()
-dfs_button = pygame.image.load('button_dfs.png')
 WIDTH, HEIGHT = TILE_SIZE * len(current_level[0]), TILE_SIZE * len(current_level)
-dfs_button_x = 100
-dfs_button_y = 100
-dfs_button_width = 100
-dfs_button_height = 100
+
