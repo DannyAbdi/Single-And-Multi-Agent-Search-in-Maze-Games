@@ -34,14 +34,14 @@ run = True
 while run:
     timer.tick(FPS)
     maze.draw()
-    player.draw()
+    player.draw(screen)
     enemy1.draw(screen)
     easy_button.draw()
     normal_button.draw()
     hard_button.draw()
 
     # player_controller.move_to_goal_dfs()
-    # player_controller.move_to_goal_bfs()
+    player_controller.move_to_goal_bfs()
     # player_controller.move_to_goal_dijkstra()
     # player_controller.move_to_goal_astar()
 

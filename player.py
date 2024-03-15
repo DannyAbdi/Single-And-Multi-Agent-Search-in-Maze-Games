@@ -18,5 +18,5 @@ class Player:
     This method utilizes the Pygame library to draw a white rectangle representing the player
     at the specified (x, y) coordinates with the size of TILE_SIZE.
     """
-    def draw(self):
+    def draw(self, screen):
         pygame.draw.rect(screen, 'white', (self.x, self.y, TILE_SIZE, TILE_SIZE))
