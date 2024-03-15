@@ -16,7 +16,6 @@ class PlayerController:
         self.player = player
         self.maze = maze
         self.player_position = (1, 1)
-        self.enemy_positions = self.get_enemy_positions()
         self.dfs_solver = DFS()
         self.bfs_solver = BFS()
         self.dijkstra_solver = None
@@ -53,6 +52,12 @@ class PlayerController:
             self.player.x = new_x
             self.player.y = new_y
 
+    """
+    Checks if a given position is valid within the maze.
+
+    :param position: The position to check in the form of (x, y) coordinates.
+    :return: True if the position is valid and does not collide with walls, False otherwise.
+    """
     def is_valid_position(self, position):
         x, y = position
         return 0 <= x < len(self.maze.current_level) and 0 <= y < len(self.maze.current_level[0]) and \
