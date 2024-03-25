@@ -71,7 +71,7 @@ class TestDFS(unittest.TestCase):
         self.assertEqual(dfs.get_path(), expected_path)
 
         start = (0, 0)
-        goal = (2, 2)  
+        goal = (2, 2)
         dfs._dfs(maze, start, goal)
         self.assertEqual(dfs.get_path(), [])
 
