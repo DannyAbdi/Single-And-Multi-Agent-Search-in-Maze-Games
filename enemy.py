@@ -4,6 +4,8 @@ from config import *
 """
 Class representing an enemy agent in the game.
 """
+
+
 class Enemy:
     """
     Initialise the Enemy object.
@@ -12,6 +14,7 @@ class Enemy:
     :param x (int): The x-coordinate of the enemy's position.
     :param y (int): The y-coordinate of the enemy's position.
     """
+
     def __init__(self, maze):
         self.maze = maze
         self.x, self.y = self.reset_position()
@@ -21,6 +24,7 @@ class Enemy:
 
     :return: tuple: A tuple containing the x and y coordinates of the enemy's position.
     """
+
     def reset_position(self):
         while True:
             num_rows = self.maze.num_rows()
@@ -41,5 +45,6 @@ class Enemy:
 
     :param screen: The Pygame screen surface to draw on.
     """
+
     def draw(self, screen):
         pygame.draw.rect(screen, 'blue', (self.x, self.y, TILE_SIZE, TILE_SIZE))
