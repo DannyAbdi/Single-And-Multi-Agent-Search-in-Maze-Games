@@ -11,3 +11,5 @@ This command will download and install the latest version of Pygame from the Pyt
 Lastly, all you have to do is run main.py from your IDE of choice. 
 
 To change the algorithm that is in effect, you must uncomment the code for that specific algorithm. Don't forget to comment the algorithm you just used.
+
+Here is a video detailing the process: https://youtu.be/nPRzP42tgv0
